@@ -11,15 +11,13 @@ class Keychain {
    * Initializes the keychain using the provided information. Note that external
    * users should likely never invoke the constructor directly and instead use
    * either Keychain.init or Keychain.load. 
-   * Arguments:
-   *  You may design the constructor with any parameters you would like. 
    * Return Type: void
    */
 
   //pass in salt, keys
   constructor() {
     this.data = { 
-      /* Store member variables that you intend to be public here
+      /* Store member variables that are intended to be public here
          (i.e. information that will not compromise security if an adversary sees) */
          salt_master_key: null, //used to generate the master_key
          salt_mac: null, //used to generate mac_key
@@ -30,7 +28,7 @@ class Keychain {
 
     };
     this.secrets = { 
-      /* Store member variables that you intend to be private here
+      /* Store member variables are intended to be private here
          (information that an adversary should NOT see). */
          mac_key: null,
          aes_key: null,
@@ -145,7 +143,7 @@ class Keychain {
     * of the KVS (as returned by the dump function). The trustedDataCheck
     * is an *optional* SHA-256 checksum that can be used to validate the 
     * integrity of the contents of the KVS. If the checksum is provided and the
-    * integrity check fails, an exception should be thrown. You can assume that
+    * integrity check fails, an exception should be thrown. We can assume that
     * the representation passed to load is well-formed (i.e., it will be f
     * a valid JSON object).Returns a Keychain object that contains the data
     * from repr. 
@@ -261,7 +259,7 @@ class Keychain {
 
     let dump_data = this.data;
 
-    //whatever you're calling JSON.stringify() on should be an untypedArray
+    //whatever we're calling JSON.stringify() on should be an untypedArray
     const serialized = JSON.stringify(dump_data);
     const checksum = byteArrayToString(await subtle.digest("SHA-256", serialized));
     return [serialized, checksum];
@@ -334,7 +332,6 @@ class Keychain {
     //update kvs hash
     this.secrets.kvs_hash = byteArrayToString(await subtle.digest("SHA-256", JSON.stringify(this.data.kvs)));
   };
-
 
 
    static pad (value, n, pad){
